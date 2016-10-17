@@ -33,9 +33,7 @@ public class MainFragment extends Fragment {
 
     private static final int TYPING_TIMER_LENGTH = 600;
 
-    private RecyclerView mMessagesView;
-    private EditText mInputMessageView;
-    private List<Message> mMessages = new ArrayList<Message>();
+
     private RecyclerView.Adapter mAdapter;
     private String mUsername;
     private Socket mSocket;
@@ -49,7 +47,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mAdapter = new MessageAdapter(activity, mMessages);
+        //mAdapter = new MessageAdapter(activity, mMessages);
     }
 
     @Override
@@ -92,25 +90,6 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        mMessagesView = (RecyclerView) view.findViewById(R.id.messages);
-        mMessagesView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mMessagesView.setAdapter(mAdapter);
-
-        mInputMessageView = (EditText) view.findViewById(R.id.message_input);
-        mInputMessageView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int id, KeyEvent event) {
-                if (id == R.id.send || id == EditorInfo.IME_NULL) {
-                    //attemptSend();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-
-
     }
 
     @Override
@@ -122,39 +101,8 @@ public class MainFragment extends Fragment {
         }
 
         mUsername = data.getStringExtra("username");
-        int numUsers = data.getIntExtra("numUsers", 1);
 
-        addLog(getResources().getString(R.string.message_welcome));
-        //addParticipantsLog(numUsers);
-    }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        inflater.inflate(R.menu.menu_main, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_leave) {
-            leave();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void addLog(String message) {
-        mMessages.add(new Message.Builder(Message.TYPE_LOG)
-                .message(message).build());
-        mAdapter.notifyItemInserted(mMessages.size() - 1);
-        scrollToBottom();
     }
 
 
@@ -169,10 +117,6 @@ public class MainFragment extends Fragment {
         mSocket.disconnect();
         mSocket.connect();
         startSignIn();
-    }
-
-    private void scrollToBottom() {
-        mMessagesView.scrollToPosition(mAdapter.getItemCount() - 1);
     }
 
     private Emitter.Listener onConnect = new Emitter.Listener() {
@@ -219,25 +163,6 @@ public class MainFragment extends Fragment {
             });
         }
     };
-
-
-
-    private Emitter.Listener onUserJoined = new Emitter.Listener() {
-        @Override
-        public void call(final Object... args) {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    //JSONObject data = (JSONObject) args[0];
-                    String username = (String)args[0];
-
-                }
-            });
-        }
-    };
-
-
-
 
 }
 
