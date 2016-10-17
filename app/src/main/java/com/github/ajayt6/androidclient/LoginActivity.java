@@ -56,7 +56,7 @@ public class LoginActivity extends Activity {
         });
 
         Button closeButton = (Button) findViewById(R.id.close_button);
-        signInButton.setOnClickListener(new OnClickListener() {
+        closeButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptClose();
