@@ -55,6 +55,14 @@ public class LoginActivity extends Activity {
             }
         });
 
+        Button closeButton = (Button) findViewById(R.id.close_button);
+        signInButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attemptClose();
+            }
+        });
+
         //mSocket.on("login", onLogin);
     }
 
@@ -93,7 +101,19 @@ public class LoginActivity extends Activity {
 
         //Make a toast
         Toast.makeText(this,
-                "Good attempt kid",
+                "Good choice kid",
+                Toast.LENGTH_LONG).show();
+    }
+
+    private void attemptClose() {
+        // Reset errors.
+        mUsernameView.setError(null);
+
+        mSocket.emit("add user", "921 closeyo");
+
+        //Make a toast
+        Toast.makeText(this,
+                "So long kiddo!",
                 Toast.LENGTH_LONG).show();
     }
 
