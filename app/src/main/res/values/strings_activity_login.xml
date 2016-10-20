@@ -3,9 +3,9 @@
 
     <!-- Strings related to login -->
     <string name="prompt_username">Enter Thy Song</string>
-    <string name="action_sign_in">Thy wish my command yo</string>
+    <string name="action_sign_in">First time sign in</string>
     <string name="action_close">Close me dawg</string>
-    <string name="action_sign_in_short">Thy wish my command yo</string>
+    <string name="action_sign_in_short">First time sign in</string>
 
     <string name="error_field_required">This field is required</string>
 </resources>

@@ -40,6 +40,12 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+
+import java.util.concurrent.ThreadLocalRandom;
+
 import io.socket.client.Socket;
 
 
@@ -85,10 +91,15 @@ public class LoginActivity extends Activity {
             }
         });
 
+        Toast.makeText(this,
+                "Hey yo welcome",
+                Toast.LENGTH_LONG).show();
+
         Button signInButton = (Button) findViewById(R.id.sign_in_button);
         signInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                firstTimeLogin();
                 ;//attemptLogin();
             }
         });
@@ -182,9 +193,40 @@ public class LoginActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
 
-        //mSocket.off("login", onLogin);
+        //mSocket.off("addUser", onLogin);
     }
 
+    /*
+    private void triggerNotification(String s) {
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.notification_icon)
+                        .setContentTitle("My notification")
+                        .setContentText("Hello World!");
+// Creates an explicit intent for an Activity in your app
+        Intent resultIntent = new Intent(this, ResultActivity.class);
+
+// The stack builder object will contain an artificial back stack for the
+// started Activity.
+// This ensures that navigating backward from the Activity leads out of
+// your application to the Home screen.
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+// Adds the back stack for the Intent (but not the Intent itself)
+        stackBuilder.addParentStack(ResultActivity.class);
+// Adds the Intent that starts the Activity to the top of the stack
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        mBuilder.setContentIntent(resultPendingIntent);
+        NotificationManager mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+// mId allows you to update the notification later on.
+        mNotificationManager.notify(mId, mBuilder.build());
+    }
+*/
     /**
      * Attempts to sign in the account specified by the login form.
      * If there are form errors (invalid username, missing fields, etc.), the
@@ -217,6 +259,23 @@ public class LoginActivity extends Activity {
                 Toast.LENGTH_LONG).show();
     }
 
+    private void firstTimeLogin()
+    {
+
+
+// nextInt is normally exclusive of the top value,
+// so add 1 to make it inclusive
+        int min = 1000;
+        int max = 9999;
+        Integer passKey = ThreadLocalRandom.current().nextInt(min, max + 1);
+
+        Toast.makeText(this,
+                "The passkey you have to enter in chrome client is " + passKey.toString(),
+                Toast.LENGTH_LONG).show();
+
+        mSocket.emit("add user passkey", passKey);
+
+    }
     private void attemptClose() {
         // Reset errors.
         mUsernameView.setError(null);
@@ -323,7 +382,7 @@ public class LoginActivity extends Activity {
             // If the user has authenticated with fingerprint, verify that using cryptography and
             // then show the confirmation message.
             assert cryptoObject != null;
-            tryEncrypt(cryptoObject.getCipher());
+            //tryEncrypt(cryptoObject.getCipher());
 
             //In this basic feature extension fingerprint authentication will confirm the command
             attemptLogin();
