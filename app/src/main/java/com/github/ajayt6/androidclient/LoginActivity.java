@@ -23,6 +23,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -32,6 +35,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -40,13 +44,10 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-
-import java.util.concurrent.ThreadLocalRandom;
-
 import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
+
+import android.support.v4.app.Fragment;
 
 
 /**
@@ -56,8 +57,8 @@ public class LoginActivity extends Activity {
 
     private EditText mUsernameView;
 
-
-    private String mUsername;
+    private String mUsername ;
+    private String mMessages = "";
 
     private Socket mSocket;
 
@@ -69,6 +70,31 @@ public class LoginActivity extends Activity {
     private static final String KEY_NAME_NOT_INVALIDATED = "key_not_invalidated";
     private static final String DIALOG_FRAGMENT_TAG = "myFragment";
     private static final String TAG = LoginActivity.class.getSimpleName();
+
+
+    private Emitter.Listener onNewMessage = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            LoginActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    String message = (String) args[0];
+
+                    mMessages = message;
+
+
+
+                }
+            });
+        }
+    };
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +121,8 @@ public class LoginActivity extends Activity {
                 "Hey yo welcome",
                 Toast.LENGTH_LONG).show();
 
+        mSocket.on("chat message", onNewMessage);
+
         Button signInButton = (Button) findViewById(R.id.sign_in_button);
         signInButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -111,6 +139,8 @@ public class LoginActivity extends Activity {
                 attemptClose();
             }
         });
+
+
 
 
         try {
@@ -251,7 +281,7 @@ public class LoginActivity extends Activity {
         mUsername = username;
 
         // perform the user login attempt.
-        mSocket.emit("add user", username);
+        mSocket.emit("secure message", username);
 
         //Make a toast
         Toast.makeText(this,
@@ -270,17 +300,19 @@ public class LoginActivity extends Activity {
         Integer passKey = ThreadLocalRandom.current().nextInt(min, max + 1);
 
         Toast.makeText(this,
-                "The passkey you have to enter in chrome client is " + passKey.toString(),
+                "The passkey you have to enter in chrome client is " + passKey.toString() + " and the received message is: " + mMessages,
                 Toast.LENGTH_LONG).show();
 
-        mSocket.emit("add user passkey", passKey);
+        String username = mUsernameView.getText().toString().trim();
+
+        mSocket.emit("add username + user passkey", username + " " + passKey);
 
     }
     private void attemptClose() {
         // Reset errors.
         mUsernameView.setError(null);
 
-        mSocket.emit("add user", "921 closeyo");
+        mSocket.emit("secure message", "921 closeyo");
 
         //Make a toast
         Toast.makeText(this,
