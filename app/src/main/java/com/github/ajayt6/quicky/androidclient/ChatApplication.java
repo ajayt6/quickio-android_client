@@ -1,4 +1,4 @@
-package com.github.ajayt6.androidclient;
+package com.github.ajayt6.quicky.androidclient;
 
 import android.app.Application;
 import io.socket.client.IO;

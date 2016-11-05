@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1014786145098",
+    "project_id": "quicky-android"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1014786145098:android:6ff90d434ba16cd9",
+        "android_client_info": {
+          "package_name": "com.github.ajayt6.quicky.androidclient"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1014786145098-1gamu0e430heakaehsq15815d555nhmm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.github.ajayt6.quicky.androidclient",
+            "certificate_hash": "2A8263A569BB95F8CA2F7635629A12F2E8081C16"
+          }
+        },
+        {
+          "client_id": "1014786145098-7kr9j5kvaddj1494lcmugvhlbbbhrgf2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAatJL8R7yzxo1-VH8gw03DKVCGuyOEMkQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

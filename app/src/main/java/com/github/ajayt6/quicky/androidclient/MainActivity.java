@@ -1,4 +1,4 @@
-package com.github.ajayt6.androidclient;
+package com.github.ajayt6.quicky.androidclient;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;

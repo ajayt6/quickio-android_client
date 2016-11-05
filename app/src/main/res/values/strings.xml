@@ -38,10 +38,12 @@
     <string name="item_title">White Mesh Pluto Backpack</string>
     <string name="item_price">$62.68</string>
     <string name="item_description">Mesh backpack in white. Black textile trim throughout.</string>
-    <string name="purchase_done">Confirmed dawg</string>
+    <string name="purchase_done">Confirmed</string>
     <string name="new_fingerprint_enrolled_description">A new fingerprint was added to this device, so your password is required.</string>
     <string name="use_fingerprint_in_future">Use fingerprint in the future</string>
     <string name="use_fingerprint_to_authenticate_title">Use fingerprint to authenticate</string>
     <string name="use_fingerprint_to_authenticate_key" >use_fingerprint_to_authenticate_key</string>
+
+    <string name="server_client_id">1014786145098-7kr9j5kvaddj1494lcmugvhlbbbhrgf2.apps.googleusercontent.com</string>
 
 </resources>

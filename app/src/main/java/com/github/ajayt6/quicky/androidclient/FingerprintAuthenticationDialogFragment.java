@@ -14,7 +14,7 @@
  * limitations under the License
  */
 
-package com.github.ajayt6.androidclient;
+package com.github.ajayt6.quicky.androidclient;
 
 import android.app.Activity;
 import android.app.DialogFragment;

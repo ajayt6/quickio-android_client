@@ -7,7 +7,7 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        tools:context="com.github.ajayt6.androidclient.LoginActivity">
+        tools:context="com.github.ajayt6.quicky.androidclient.LoginActivity">
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -35,6 +35,11 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/action_sign_in"
                 android:textStyle="bold"/>
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/google_sign_in_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/close_button"
